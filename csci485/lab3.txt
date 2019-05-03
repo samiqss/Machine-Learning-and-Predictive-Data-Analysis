@@ -1,0 +1,34 @@
+$sqlite3 csci485lab3alqusus
+$create table iris(sepal_length float, sepal_width float, petal_length float, petal_width float, class varchar(40)); 
+$.mode csv
+$.import ./csci485/iris.data.csv iris
+//////////
+explore data
+//////////
+//export//
+//////////
+.header on
+.mode csv
+.once ./csci485/iris.data.out.csv
+SELECT * FROM iris;
+.system ./csci485/iris.data.out.csv
+
+.................asn 2
+sqlite3 csci485asn2alqusus
+.header on
+.mode csv
+.import A2-data.csv csci485asn2alqusus
+SELECT * FROM csci485asn2alqusus;
+.once asn2out.csv
+select distinct Measurement, STATUS as stat, count(*) from csci485asn2alqusus WHERE Measurement is not null GROUP BY Measurement, STATUS;
+
+select sum(count) from (select distinct Measurement, STATUS, count(*) as count from csci485asn2alqusus WHERE Measurement is not null GROUP BY Measurement, STATUS) where STATUS='Normal' AND Measurement>140;
+
+select distinct Supply_Level, STATUS as stat, count(*) from csci485asn2alqusus WHERE Supply_Level is not null GROUP BY Supply_Level, STATUS;
+
+select sum(count) from (select distinct Supply_Level, STATUS as stat, count(*) from csci485asn2alqusus WHERE Supply_Level is not null GROUP BY Supply_Level, STATUS) where STATUS='Normal' AND Supply_Level>140;
+
+.....................
+asn4
+select count(EVALUATION) from T where EVALUATION='unacc';
+select count(MAINT) from T where EVALUATION='unacc' and MAINT='vhigh';
